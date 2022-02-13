@@ -1,0 +1,100 @@
+# 2. Accessing the Command Line
+___
+
+## 1. INTRODUCTION TO THE BASH SHELL
+---
+The default shell for users in Red Hat Enterprise Linux is the GNU Bourne-Again Shell (bash).
+
+When a regular user starts a shell, the default prompt ends with a `$` character,  as shown below.
+
+```
+haseeb@RHEL8 ~]$
+```
+
+The `$` character is replaced by a `#` character if the shell is running as the superuser, root.
+
+The superuser shell prompt is shown below.
+```
+root@RHEL8 ~]#
+```
+___
+
+## 2. SHELL BASICS
+___
+Commands entered at the shell prompt have three basic parts:
+
+* **Command**
+* **Options**
+* **Arguments**
+
+For example, the command 
+```
+haseeb@RHEL8 ~]$ ls -l /etc/fstab
+```
+**Command**	= `ls`
+**Option**		= `-l`
+**Argument** = `/etc/fstab`
+___
+## 3. LOGGING IN TO A LOCAL COMPUTER
+___
+The computer might have a hardware keyboard and display for input and output directly connected to it. This is the Linux machine's ***physical console***. The physical console supports multiple ***virtual consoles***, which can run separate terminals. Each virtual console supports an independent login session.
+
+You can switch between them by pressing **Ctrl+Alt** and a function key (**F1** through **F6**)
+
+| Keyboard Shortcut |Using Command		| Virtual Consoles  |
+| ----------------- |:------------:  |:---------------:  | 
+| **Ctrl+Alt+F1**   | `chve 1`				| **tty1**						|
+| **Ctrl+Alt+F2**   | `chve 2`				| **tty2**						|
+| **Ctrl+Alt+F3**   | `chve 3`				| **tty3**						|
+| **Ctrl+Alt+F4**   | `chve 4`				| **tty4**						|
+| **Ctrl+Alt+F5**   | `chve 5`				| **tty5**						|
+| **Ctrl+Alt+F6**   | `chve 6`				| **tty6**						|
+
+The computer might provide a graphical login prompt on one of the virtual consoles. You can use this to log in to a ***graphical environment***. The graphical environment also runs on a virtual console.
+
+The **`who`** command is used to get information about currently logged in user on to system.
+
+```
+[haseeb@rhel8 ~]$ who
+
+haseeb   tty2         2022-02-13 13:03 (tty2)
+root     tty3         2022-02-13 13:03
+user1    tty4         2022-02-13 13:03
+user2    tty5         2022-02-13 13:04
+user3    tty6         2022-02-13 13:04
+```
+___
+## 4. LOGGING IN OVER THE NETWORK
+___
+Linux users and administrators often need to get shell access to a remote system by connecting to it over the network.
+
+In Linux, the most common way to get a shell prompt on a remote system is to use **Secure Shell (SSH)**. Most Linux systems (including Red Hat Enterprise Linux) and macOS provide the **OpenSSH** command-line program `ssh` for this purpose.
+
+```
+PS C:\Users\S.A.Haseeb> ssh haseeb@192.168.100.100
+
+The authenticity of host '192.168.100.100 (192.168.100.100)' can't be established.
+ECDSA key fingerprint is SHA256:EVoOatN9/Cl3pPy4ZeIosFgOqLm7VSlsi2MDgwOsMXI.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '192.168.100.100' (ECDSA) to the list of known hosts.
+haseeb@192.168.100.100's password:
+
+Last login: Sun Feb 13 13:03:15 2022
+
+[haseeb@rhel8 ~]$ who
+haseeb   tty2         2022-02-13 13:03 (tty2)
+haseeb   pts/1        2022-02-13 13:10 (192.168.100.1)
+[haseeb@rhel8 ~]$
+```
+
+### LOGGING OUT
+When you are finished using the shell and want to quit.
+* You can enter the `exit` command to terminate the current shell session. 
+```
+[haseeb@rhel8 ~]$ exit
+logout
+Connection to 192.168.100.100 closed.
+PS C:\Users\S.A.Haseeb>
+```
+* Alternatively,finish a session by pressing **Ctrl+D**.
+___
