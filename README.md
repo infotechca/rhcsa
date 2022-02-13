@@ -1,2 +1,1 @@
-# rhcsa
-InfoTech Notes - Red Hat Certified System Administrator (RHCSA)
+# InfoTech Notes - Red Hat Certified System Administrator (RHCSA)
