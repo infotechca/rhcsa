@@ -259,3 +259,124 @@ The `wc` command counts lines, words, and characters in a file. It takes a **-l*
  988 /etc/group
 3546 total
 ```
+### TAB COMPLETION
+
+**Tab completion** allows a user to quickly complete *commands* or *file names* after they have typed enough at the prompt to make it unique. If the characters typed are not unique, pressing the **Tab key twice** displays all commands that begin with the characters already typed.
+
+First check whether you have `bash-completion` feature installed or not
+```
+[haseeb@rhel8 ~]$ rpm -qa | grep bash-completion
+bash-completion-2.7-5.el8.noarch
+```
+Install `bash-completion` feature using below command:
+```
+[haseeb@rhel8 ~]$ sudo dnf install bash-completion
+Updating Subscription Management repositories.
+Last metadata expiration check: 1:17:21 ago on Mon 14 Feb 2022 11:32:16 AM IST.
+Package bash-completion-1:2.7-5.el8.noarch is already installed.
+Dependencies resolved.
+Nothing to do.
+Complete!
+```
+
+```
+[haseeb@rhel8 ~]$ pas(1)Tab+Tab
+passwd       paste        pasuspender
+[haseeb@rhel8 ~]$ pass(2)Tab
+[haseeb@rhel8 ~]$ passwd
+```
+&#10102; Press Tab twice.<br>
+&#10103; Press Tab once.<br>
+
+### CONTINUING A LONG COMMAND ON ANOTHER LINE
+
+Commands that support many options and arguments can quickly grow quite long and are automatically scrolled by the Bash shell.<br>
+To make the readability of the command easier, you can *break* it up so that if fits on more than one line.<br>
+
+To do this, add a backslash character (`\`) as the last character on the line. This tells the shell to ignore the newline character and treat the next line as if it were part of the current line. The Bash shell will start the next line with the continuation prompt, usually a greater-than character (`>`), which indicates that the line is a continuation of the previous line. 
+
+```
+[haseeb@rhel8 ~]$ head -n 3 \
+> /usr/share/dict/words \
+> /usr/share/dict/linux.words
+
+==> /usr/share/dict/words <==
+1080
+10-point
+10th
+
+==> /usr/share/dict/linux.words <==
+1080
+10-point
+10th
+```
+
+### COMMAND HISTORY
+#### `history`
+The `history` command displays a list of previously executed commands prefixed with a command number.<br>
+
+The exclamation point character (`!`) is a metacharacter that is used to expand previous commands without having to retype them. The **!number** command expands to the command matching the number specified. The **!string** command expands to the most recent command that begins with the string specified.
+
+```
+[haseeb@rhel8 ~]$ history
+   ...output omitted...
+   32  whoami ; cal
+   33  clear
+   34  date
+   35  date +%r
+   36  date +%x
+   37  clear
+   38  passwd
+   39  clear
+   40  file /etc/passwd
+   41  file /usr/bin/passwd
+   42  file /home
+   43  clear
+   44  cat /etc/passwd
+   45  clear
+   46  head /etc/passwd
+   47  tail -n 3 /etc/passwd
+   48  clear
+   49  wc /etc/passwd
+```
+```
+[haseeb@rhel8 ~]$ !date
+date +%x
+02/14/2022
+```
+
+```
+[haseeb@rhel8 ~]$ !32
+whoami ; cal
+haseeb
+    February 2022
+Su Mo Tu We Th Fr Sa
+       1  2  3  4  5
+ 6  7  8  9 10 11 12
+13 14 15 16 17 18 19
+20 21 22 23 24 25 26
+27 28
+```
+
+The arrow keys can be used to navigate through previous commands in the shell's history. **UpArrow** edits the previous command in the history list. **DownArrow** edits the next command in the history list. **LeftArrow** and **RightArrow** move the cursor left and right in the current command from the history list, so that you can edit it before running it.<br>
+<br>
+You can use either the **Esc+.** or **Alt+.** key combination to insert the last word of the previous command at the cursor's current location. Repeated use of the key combination will replace that text with the last word of even earlier commands in the history. The **Alt+.** key combination is particularly convenient because you can hold down **Alt** and press `.` repeatedly to easily go through earlier and earlier commands.
+
+### EDITING THE COMMAND LINE
+When used interactively, **bash** has a command-line editing feature.
+
+#### Useful Command-line Editing Shortcuts
+
+| SHORTCUT          | DESCRIPTION                                                       |
+| ----------------- | ----------------------------------------------------------------- |
+| Ctrl+A            | Jump to the beginning of the command line.                        |
+| Ctrl+E            | Jump to the end of the command line.                              |
+| Ctrl+U            | Clear from the cursor to the beginning of the command line.       |
+| Ctrl+K            | Clear from the cursor to the end of the command line              |
+| Ctrl+LeftArrow    | Jump to the beginning of the previous word on the command line.   |
+| Ctrl+RightArrow   | Jump to the end of the next word on the command line.             |
+| Ctrl+R            | Search the history list of commands for a pattern.                |
+
+There are several other command-line editing commands available, but these are the most useful commands for new users. The other commands can be found in the **bash**(1) man page.
+
+---
